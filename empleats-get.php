@@ -16,7 +16,9 @@ body, form , table {
     max-width: 800px; 
     width: 100%;
     margin: auto;
- }
+}
+
+h1 { text-align: center; }
 
 form input{
     width: 100%;
@@ -24,6 +26,8 @@ form input{
     padding: 5px;
 }
 </style>
+
+<h1>Consulta d'empleats amb el GET</h1>
 
 <form caption="" method="get">        
     <p>Filtre: <input type="text" value="<?php echo $search ?>" name="search"></p>
@@ -34,19 +38,19 @@ form input{
 
 <?php
 
-$sql = "SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, SALARY, JOB_ID FROM employees";
+$sql = "select employee_id, first_name, last_name, email, salary, job_id from employees";
 $conditions = [];
 
 if (!empty($search)) {
-    $conditions[] = "(FIRST_NAME LIKE '%$search%' OR LAST_NAME LIKE '%$search%' OR EMPLOYEE_ID LIKE '%$search%')";
+    $conditions[] = "(first_name LIKE '%$search%' OR last_name LIKE '%$search%' OR employee_id LIKE '%$search%')";
 }
 
 if (!empty($min_salary)) {
-    $conditions[] = "SALARY >= $min_salary";
+    $conditions[] = "salary >= $min_salary";
 }
 
 if (!empty($max_salary)) {
-    $conditions[] = "SALARY <= $max_salary";
+    $conditions[] = "salary <= $max_salary";
 }
 
 if ($conditions) {
@@ -65,17 +69,17 @@ $result = $conn->query($sql);
             <th>LAST_NAME</th>
             <th>EMAIL</th>
             <th>SALARY</th>
-            <th>JOB_ID</th>
+            <th>JOBS_ID</th>
         </tr>
         <?php
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . $row['EMPLOYEE_ID'] . "</td>";
-                echo "<td>" . $row['FIRST_NAME'] . "</td>";
-                echo "<td>" . $row['LAST_NAME'] . "</td>";
-                echo "<td>" . $row['EMAIL'] . "</td>";
-                echo "<td>" . $row['SALARY'] . "</td>";
-                echo "<td>" . $row['JOB_ID'] . "</td>";
+                echo "<td>" . $row['employee_id'] . "</td>";
+                echo "<td>" . $row['first_name'] . "</td>";
+                echo "<td>" . $row['last_name'] . "</td>";
+                echo "<td>" . $row['email'] . "</td>";
+                echo "<td>" . $row['salary'] . "</td>";
+                echo "<td>" . $row['job_id'] . "</td>";
                 echo "</tr>";
             }
         ?>
@@ -84,6 +88,4 @@ $result = $conn->query($sql);
 
 <?php
 mysqli_close($conn);
-
 ?>
-
